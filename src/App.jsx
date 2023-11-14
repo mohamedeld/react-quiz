@@ -21,6 +21,7 @@ export const NEXT_QUESTION = "NEXT_QUESTION";
 export const FINISH = "FINISH";
 export const RESET = "RESET";
 export const TICK = "TICK";
+const SECOND_PER_QUESTION = 30;
 // initialState
 const initialState = {
   questions: [],
@@ -29,7 +30,7 @@ const initialState = {
   answer: null,
   points: 0,
   highScore: 0,
-  secondRemaining: 10,
+  secondRemaining: null,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -48,6 +49,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "active",
+        secondRemaining: state.questions.length * SECOND_PER_QUESTION,
       };
     case NEW_ANSWER:
       // eslint-disable-next-line no-case-declarations
@@ -93,6 +95,7 @@ function reducer(state, action) {
       return {
         ...state,
         secondRemaining: state.secondRemaining - 1,
+        status: state.secondRemaining === 0 ? "finish" : state.status,
       };
     default:
       throw new Error("Action unknown");
@@ -101,7 +104,15 @@ function reducer(state, action) {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { questions, status, index, answer, points, highScore } = state;
+  const {
+    questions,
+    status,
+    index,
+    answer,
+    points,
+    highScore,
+    secondRemaining,
+  } = state;
   useEffect(function () {
     fetch("http://localhost:3000/questions")
       .then((res) => res.json())
@@ -135,7 +146,7 @@ function App() {
               answer={answer}
             />
             <Footer>
-              <Timer dispatch={dispatch} />
+              <Timer dispatch={dispatch} secondRemaining={secondRemaining} />
               <NextButton
                 dispatch={dispatch}
                 answer={answer}
