@@ -1,18 +1,15 @@
-export default function Progress({
-  index,
-  numOfQuestion,
-  points,
-  numOfPoints,
-  answer,
-}) {
+import { useQuestion } from "../contexts/QuestionContext";
+
+export default function Progress() {
+  const { index, numOfQuestions, points, numOfPoints, answer } = useQuestion();
   return (
     <header className="progress">
       <progress
-        max={numOfQuestion}
+        max={numOfQuestions}
         value={index + Number(answer !== null)}
       ></progress>
       <p>
-        Question <strong>{index + 1}</strong> / {numOfQuestion}
+        Question <strong>{index + 1}</strong> / {numOfQuestions}
       </p>
       <p>
         <strong>{points}</strong> / {numOfPoints}

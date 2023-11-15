@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import { TICK } from "../App";
+import { TICK } from "./../contexts/QuestionContext";
+import { useQuestion } from "../contexts/QuestionContext";
 
-export default function Timer({ dispatch, secondRemaining }) {
+export default function Timer() {
+  const { dispatch, secondRemaining } = useQuestion();
   const mins = Math.floor(secondRemaining / 60);
   const seconds = secondRemaining % 60;
   useEffect(

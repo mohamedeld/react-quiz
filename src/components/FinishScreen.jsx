@@ -1,11 +1,8 @@
-import { RESET } from "../App";
+import { useQuestion } from "../contexts/QuestionContext";
+import { RESET } from "./../contexts/QuestionContext";
 
-export default function FinishScreen({
-  points,
-  numOfPoints,
-  highScore,
-  dispatch,
-}) {
+export default function FinishScreen() {
+  const { points, numOfPoints, highScore, dispatch } = useQuestion();
   const percentage = (points / numOfPoints) * 100;
   return (
     <>

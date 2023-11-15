@@ -1,6 +1,8 @@
-import { NEW_ANSWER } from "../App";
+import { NEW_ANSWER } from "./../contexts/QuestionContext";
+import { useQuestion } from "../contexts/QuestionContext";
 
-export default function Options({ question, dispatch, answer }) {
+export default function Options({ question }) {
+  const { dispatch, answer } = useQuestion();
   const hasAnswer = answer !== null;
   return (
     <div className="options">

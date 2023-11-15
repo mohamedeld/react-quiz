@@ -1,11 +1,8 @@
-import { FINISH, NEXT_QUESTION } from "../App";
+import { useQuestion } from "../contexts/QuestionContext";
+import { NEXT_QUESTION, FINISH } from "./../contexts/QuestionContext";
 
-export default function NextButton({
-  dispatch,
-  answer,
-  index,
-  numOfQuestions,
-}) {
+export default function NextButton() {
+  const { dispatch, answer, index, numOfQuestions } = useQuestion();
   if (answer === null) return null;
   if (index < numOfQuestions - 1)
     return (
